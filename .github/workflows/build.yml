@@ -4,7 +4,9 @@
 # against bad commits.
 
 name: build
-on: [pull_request, push]
+on:
+  release:
+    types: [published]
 
 jobs:
   build:
