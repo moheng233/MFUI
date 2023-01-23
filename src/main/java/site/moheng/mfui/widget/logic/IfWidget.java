@@ -10,4 +10,7 @@ public class IfWidget extends BaseWidget {
 	public final WidgetAttribute<Boolean, IfWidget> basis = new WidgetAttribute<>(true, this);
 
 
+	public IfWidget() {
+		super();
+	}
 }

@@ -1,8 +1,9 @@
-package site.moheng.mfui.widget;
+package site.moheng.mfui.widget.features;
 
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import site.moheng.mfui.binding.WidgetAttribute;
+import site.moheng.mfui.widget.BaseWidget;
 
 
 public class LabelWidget extends BaseWidget {
