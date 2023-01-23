@@ -24,7 +24,7 @@ public class WidgetTestScreen extends WidgetScreen {
 	@Override
 	public void tick() {
 		super.tick();
-		count.set((count.get() + 20) % 765);
+		count.set((count.getValue() + 20) % 765);
 	}
 
 	@Override
