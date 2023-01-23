@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "mfui_test",
+  "version": "${version}",
+
+  "name": "Minecraft Flex UI Test Mod",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "moheng"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/mfui_test/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "site.moheng.mfui.MFUITest"
+    ],
+    "client": [
+      "site.moheng.mfui.MFUITest"
+    ]
+  },
+  "mixins": [
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.11",
+    "fabric-api": "*",
+    "minecraft": "~1.19.3",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
