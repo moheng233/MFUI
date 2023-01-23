@@ -1,35 +1,42 @@
 package site.moheng.mfui.binding;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
-public class ComputedDataBindingSource<S extends IBindingSource<S>, T extends IBindingSource<T>> implements  IBindingSource<T> {
-
-	public final S sourceBinding;
-	public final T targetBinding;
-
+public class ComputedDataBindingSource<S, T> implements IBindingSource<T> {
+	public final IBindingSource<S> sourceBinding;
+	protected List<IEvent<T>> listeners = new ArrayList<>();
 	protected IComputed<S, T> computed;
 
-	public ComputedDataBindingSource(S source, Supplier<T> target, IComputed<S, T> computed) {
+	public ComputedDataBindingSource(IBindingSource<S> source, IComputed<S, T> computed) {
 		this.sourceBinding = source;
-		this.targetBinding = target.get();
 		this.computed = computed;
 
 		source.addListener(this::change);
 	}
 
-	void change(S source) {
-		computed.accept(source, targetBinding);
+	public void change(IBindingSource<S> source) {
+		submit();
 	}
 
 	@Override
 	public List<IEvent<T>> getListeners() {
-		return targetBinding.getListeners();
+		return listeners;
+	}
+
+	@Override
+	public void set(T data) {
+
+	}
+
+	@Override
+	public T get() {
+		return computed.accept(sourceBinding.get());
 	}
 
 
 	@FunctionalInterface
-	public interface IComputed<S extends IBindingSource<?>, T extends IBindingSource<?>> {
-		void accept(S source, T target);
+	public interface IComputed<S, T> {
+		T accept(S source);
 	}
 }

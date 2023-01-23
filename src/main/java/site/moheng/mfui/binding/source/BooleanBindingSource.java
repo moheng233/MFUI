@@ -5,11 +5,11 @@ import site.moheng.mfui.binding.IBindingSource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BooleanBindingSource implements IBindingSource<BooleanBindingSource> {
-	protected List<IEvent<BooleanBindingSource>> listeners = new ArrayList<>();
+public class BooleanBindingSource implements IBindingSource<Boolean> {
+	protected List<IEvent<Boolean>> listeners = new ArrayList<>();
 	protected boolean data = false;
 
-	public boolean get() {
+	public boolean getValue() {
 		return data;
 	}
 
@@ -18,14 +18,17 @@ public class BooleanBindingSource implements IBindingSource<BooleanBindingSource
 		submit();
 	}
 
-	public void submit() {
-		for (var consumer : listeners) {
-			consumer.accept(this);
-		}
+	@Override
+	public List<IEvent<Boolean>> getListeners() {
+		return listeners;
 	}
 
-	@Override
-	public List<IEvent<BooleanBindingSource>> getListeners() {
-		return listeners;
+	public void set(Boolean data) {
+		this.data = data;
+		submit();
+	}
+
+	public Boolean get() {
+		return data;
 	}
 }

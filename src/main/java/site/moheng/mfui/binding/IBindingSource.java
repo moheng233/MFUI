@@ -1,13 +1,22 @@
 package site.moheng.mfui.binding;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * 动态数据的绑定源
  */
-public interface IBindingSource<S extends IBindingSource<S>> {
+public interface IBindingSource<S> {
+	default void submit() {
+		for (var listener : getListeners()) {
+			listener.accept(this);
+		}
+	}
+
 	List<IEvent<S>> getListeners();
+
+	void set(S data);
+
+	S get();
 
 	default void addListener(IEvent<S> listener) {
 		getListeners().add(listener);
@@ -17,12 +26,11 @@ public interface IBindingSource<S extends IBindingSource<S>> {
 		getListeners().remove(listener);
 	}
 
-	@SuppressWarnings("unchecked")
-	default <T extends IBindingSource<T>> T computed(Supplier<T> target, ComputedDataBindingSource.IComputed<S, T> computed) {
-		return new ComputedDataBindingSource<>((S) this, target, computed).targetBinding;
+	default <T> ComputedDataBindingSource<S, T> computed(ComputedDataBindingSource.IComputed<S, T> computed) {
+		return new ComputedDataBindingSource<>(this, computed);
 	}
 
-	interface IEvent<S extends IBindingSource<?>> {
-		void accept(S source);
+	interface IEvent<S> {
+		void accept(IBindingSource<S> source);
 	}
 }

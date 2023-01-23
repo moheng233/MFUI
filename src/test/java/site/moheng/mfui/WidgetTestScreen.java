@@ -3,7 +3,7 @@ package site.moheng.mfui;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import site.moheng.mfui.binding.source.IntBindingSource;
-import site.moheng.mfui.binding.source.TextBindingSource;
+import site.moheng.mfui.util.DrawUtil;
 import site.moheng.mfui.widget.BoxWidget;
 import site.moheng.mfui.widget.LabelWidget;
 import site.moheng.mfui.widget.ScreenWidget;
@@ -33,13 +33,12 @@ public class WidgetTestScreen extends WidgetScreen {
 				.justifyContent(WidgetJustify.Center)
 				.alignItems(WidgetAlign.Center)
 				.child(new BoxWidget()
+						.background.put(DrawUtil.LIGHT_PANEL)
 						.child(new LabelWidget()
 								.text.binding(
-										count.computed(TextBindingSource::new,
-												((source, target) -> target.set(Text.of("Count:" + source.get())))))
+										count.computed((source) -> Text.of("Count:" + source)))
 								.color.binding(
-										count.computed(IntBindingSource::new,
-												((source, target) -> target.set(MathHelper.packRgb(count.get() % 255, MathHelper.clamp(count.get() - 255, 0, 255), MathHelper.clamp(count.get() - 510, 0, 255)))))
+										count.computed((count) -> MathHelper.packRgb(count % 255, MathHelper.clamp(count - 255, 0, 255), MathHelper.clamp(count - 510, 0, 255)))
 								)
 								.margin(WidgetEdge.All, 4))
 				);

@@ -2,17 +2,24 @@ package site.moheng.mfui.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
-public class NinePatchRenderer {
+public class NinePatchRenderer implements RectDrawable {
 	private final Identifier texture;
 	private final int u, v;
 	private final Size cornerPatchSize;
 	private final Size centerPatchSize;
 	private final Size textureSize;
 	private final boolean repeat;
+
+	public NinePatchRenderer(Identifier texture, Size patchSize, Size textureSize, boolean repeat) {
+		this(texture, 0, 0, patchSize, textureSize, repeat);
+	}
+
+	public NinePatchRenderer(Identifier texture, int u, int v, Size patchSize, Size textureSize, boolean repeat) {
+		this(texture, u, v, patchSize, patchSize, textureSize, repeat);
+	}
 
 	public NinePatchRenderer(Identifier texture, int u, int v, Size cornerPatchSize, Size centerPatchSize, Size textureSize, boolean repeat) {
 		this.texture = texture;
@@ -23,15 +30,6 @@ public class NinePatchRenderer {
 		this.centerPatchSize = centerPatchSize;
 		this.repeat = repeat;
 	}
-
-	public NinePatchRenderer(Identifier texture, int u, int v, Size patchSize, Size textureSize, boolean repeat) {
-		this(texture, u, v, patchSize, patchSize, textureSize, repeat);
-	}
-
-	public NinePatchRenderer(Identifier texture, Size patchSize, Size textureSize, boolean repeat) {
-		this(texture, 0, 0, patchSize, textureSize, repeat);
-	}
-
 
 	public void draw(MatrixStack matrices, int x, int y, int width, int height) {
 		RenderSystem.setShaderTexture(0, this.texture);
@@ -50,28 +48,6 @@ public class NinePatchRenderer {
 			this.drawStretched(matrices, x, y, width, height);
 		}
 //		Tessellator.getInstance().draw();
-	}
-
-	protected void drawStretched(MatrixStack matrices, int x, int y, int width, int height) {
-		int doubleCornerHeight = this.cornerPatchSize.height() * 2;
-		int doubleCornerWidth = this.cornerPatchSize.width() * 2;
-
-		int rightEdge = this.cornerPatchSize.width() + this.centerPatchSize.width();
-		int bottomEdge = this.cornerPatchSize.height() + this.centerPatchSize.height();
-
-		if (width > doubleCornerWidth && height > doubleCornerHeight) {
-			DrawableHelper.drawTexture(matrices, x + this.cornerPatchSize.width(), y + this.cornerPatchSize.height(), width - doubleCornerWidth, height - doubleCornerHeight, this.u + this.cornerPatchSize.width(), this.v + this.cornerPatchSize.height(), this.centerPatchSize.width(), this.centerPatchSize.height(), this.textureSize.width(), this.textureSize.height());
-		}
-
-		if (width > doubleCornerWidth) {
-			DrawableHelper.drawTexture(matrices, x + this.cornerPatchSize.width(), y, width - doubleCornerWidth, this.cornerPatchSize.height(), this.u + this.cornerPatchSize.width(), this.v, this.centerPatchSize.width(), this.cornerPatchSize.height(), this.textureSize.width(), this.textureSize.height());
-			DrawableHelper.drawTexture(matrices, x + this.cornerPatchSize.width(), y + height - this.cornerPatchSize.height(), width - doubleCornerWidth, this.cornerPatchSize.height(), this.u + this.cornerPatchSize.width(), this.v + bottomEdge, this.centerPatchSize.width(), this.cornerPatchSize.height(), this.textureSize.width(), this.textureSize.height());
-		}
-
-		if (height > doubleCornerHeight) {
-			DrawableHelper.drawTexture(matrices, x, y + this.cornerPatchSize.height(), this.cornerPatchSize.width(), height - doubleCornerHeight, this.u, this.v + this.cornerPatchSize.height(), this.cornerPatchSize.width(), this.centerPatchSize.height(), this.textureSize.width(), this.textureSize.height());
-			DrawableHelper.drawTexture(matrices, x + width - this.cornerPatchSize.width(), y + this.cornerPatchSize.height(), this.cornerPatchSize.width(), height - doubleCornerHeight, this.u + rightEdge, this.v + this.cornerPatchSize.height(), this.cornerPatchSize.width(), this.centerPatchSize.height(), this.textureSize.width(), this.textureSize.height());
-		}
 	}
 
 	protected void drawRepeated(MatrixStack matrices, int x, int y, int width, int height) {
@@ -118,6 +94,28 @@ public class NinePatchRenderer {
 
 				leftoverHeight -= this.centerPatchSize.height();
 			}
+		}
+	}
+
+	protected void drawStretched(MatrixStack matrices, int x, int y, int width, int height) {
+		int doubleCornerHeight = this.cornerPatchSize.height() * 2;
+		int doubleCornerWidth = this.cornerPatchSize.width() * 2;
+
+		int rightEdge = this.cornerPatchSize.width() + this.centerPatchSize.width();
+		int bottomEdge = this.cornerPatchSize.height() + this.centerPatchSize.height();
+
+		if (width > doubleCornerWidth && height > doubleCornerHeight) {
+			DrawableHelper.drawTexture(matrices, x + this.cornerPatchSize.width(), y + this.cornerPatchSize.height(), width - doubleCornerWidth, height - doubleCornerHeight, this.u + this.cornerPatchSize.width(), this.v + this.cornerPatchSize.height(), this.centerPatchSize.width(), this.centerPatchSize.height(), this.textureSize.width(), this.textureSize.height());
+		}
+
+		if (width > doubleCornerWidth) {
+			DrawableHelper.drawTexture(matrices, x + this.cornerPatchSize.width(), y, width - doubleCornerWidth, this.cornerPatchSize.height(), this.u + this.cornerPatchSize.width(), this.v, this.centerPatchSize.width(), this.cornerPatchSize.height(), this.textureSize.width(), this.textureSize.height());
+			DrawableHelper.drawTexture(matrices, x + this.cornerPatchSize.width(), y + height - this.cornerPatchSize.height(), width - doubleCornerWidth, this.cornerPatchSize.height(), this.u + this.cornerPatchSize.width(), this.v + bottomEdge, this.centerPatchSize.width(), this.cornerPatchSize.height(), this.textureSize.width(), this.textureSize.height());
+		}
+
+		if (height > doubleCornerHeight) {
+			DrawableHelper.drawTexture(matrices, x, y + this.cornerPatchSize.height(), this.cornerPatchSize.width(), height - doubleCornerHeight, this.u, this.v + this.cornerPatchSize.height(), this.cornerPatchSize.width(), this.centerPatchSize.height(), this.textureSize.width(), this.textureSize.height());
+			DrawableHelper.drawTexture(matrices, x + width - this.cornerPatchSize.width(), y + this.cornerPatchSize.height(), this.cornerPatchSize.width(), height - doubleCornerHeight, this.u + rightEdge, this.v + this.cornerPatchSize.height(), this.cornerPatchSize.width(), this.centerPatchSize.height(), this.textureSize.width(), this.textureSize.height());
 		}
 	}
 }
