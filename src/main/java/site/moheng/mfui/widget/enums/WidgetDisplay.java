@@ -1,7 +1,7 @@
 package site.moheng.mfui.widget.enums;
 
 
-import site.moheng.mfui.widget.IWidget;
+import site.moheng.mfui.widget.AbsWidget;
 
 import static org.lwjgl.util.yoga.Yoga.*;
 
@@ -27,10 +27,10 @@ public enum WidgetDisplay {
 		return number;
 	}
 
-	public static WidgetDisplay getDisplay(IWidget widget) {
+	public static WidgetDisplay getDisplay(AbsWidget widget) {
 		return WidgetDisplay.get(YGNodeStyleGetDisplay(widget.getYGNode()));
 	}
-	public void setDisplay(IWidget widget) {
+	public void setDisplay(AbsWidget widget) {
 		YGNodeStyleSetDisplay(widget.getYGNode(), this.get());
 	}
 }

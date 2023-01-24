@@ -13,6 +13,7 @@ import site.moheng.mfui.widget.enums.WidgetEdge;
 import site.moheng.mfui.widget.enums.WidgetFlexDirection;
 import site.moheng.mfui.widget.enums.WidgetJustify;
 import site.moheng.mfui.widget.features.ButtonWidget;
+import site.moheng.mfui.widget.features.TextBoxWidget;
 
 
 public class WidgetTestScreen extends WidgetScreen {
@@ -42,6 +43,7 @@ public class WidgetTestScreen extends WidgetScreen {
 										count.computed((count) -> MathHelper.packRgb(count % 255, MathHelper.clamp(count - 255, 0, 255), MathHelper.clamp(count - 510, 0, 255)))
 								)
 								.margin(WidgetEdge.All, 4))
+						.child(new TextBoxWidget())
 						.child(new ButtonWidget()
 								.click.on((mouse) -> close())
 								.child(new LabelWidget()

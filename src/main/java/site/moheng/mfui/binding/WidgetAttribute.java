@@ -1,12 +1,12 @@
 package site.moheng.mfui.binding;
 
-import site.moheng.mfui.widget.IWidget;
+import site.moheng.mfui.widget.IWidgetHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class WidgetAttribute<S, W extends IWidget> implements IBindingSource<S> {
+public class WidgetAttribute<S, W extends IWidgetHandler> implements IWidgetAttribute<S, W> {
 	protected final W widget;
 	protected List<IEvent<S>> listeners = new ArrayList<>();
 	protected IBindingSource<S> binding;

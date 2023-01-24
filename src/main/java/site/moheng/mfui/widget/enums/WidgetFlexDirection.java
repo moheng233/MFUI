@@ -1,7 +1,7 @@
 package site.moheng.mfui.widget.enums;
 
 
-import site.moheng.mfui.widget.IWidget;
+import site.moheng.mfui.widget.AbsWidget;
 
 import static org.lwjgl.util.yoga.Yoga.*;
 
@@ -13,7 +13,7 @@ public enum WidgetFlexDirection {
 
     private final int number;
 
-    private WidgetFlexDirection(int number) {
+    WidgetFlexDirection(int number) {
         this.number = number;
     }
 
@@ -30,10 +30,10 @@ public enum WidgetFlexDirection {
         return number;
     }
 
-    public static WidgetFlexDirection getFlexDirect(IWidget widget) {
+    public static WidgetFlexDirection getFlexDirect(AbsWidget widget) {
         return WidgetFlexDirection.get(YGNodeStyleGetFlexDirection(widget.getYGNode()));
     }
-    public final void setFlexDirection(IWidget widget) {
+    public final void setFlexDirection(AbsWidget widget) {
         YGNodeStyleSetFlexDirection(widget.getYGNode(), this.get());
     }
 

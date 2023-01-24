@@ -8,19 +8,18 @@ import org.joml.Vector2i;
 import site.moheng.mfui.binding.WidgetAttribute;
 import site.moheng.mfui.event.WidgetEvent;
 import site.moheng.mfui.util.RectDrawable;
-import site.moheng.mfui.widget.BaseWidget;
+import site.moheng.mfui.widget.AbsWidget;
 import site.moheng.mfui.widget.enums.WidgetAlign;
 import site.moheng.mfui.widget.enums.WidgetEdge;
 import site.moheng.mfui.widget.enums.WidgetJustify;
 
-public class ButtonWidget extends BaseWidget {
+public class ButtonWidget extends AbsWidget {
 	public final WidgetAttribute<Boolean, ButtonWidget> disabled = new WidgetAttribute<>(false, this);
 	public final WidgetEvent<Vector2i, ButtonWidget> click = new WidgetEvent<>(this);
 
 	public ButtonWidget() {
 		super();
-		margin(WidgetEdge.All, 4);
-		padding(WidgetEdge.All, 4);
+		border(WidgetEdge.All, 4);
 		justifyContent(WidgetJustify.Center);
 		alignItems(WidgetAlign.Center);
 

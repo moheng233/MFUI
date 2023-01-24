@@ -1,7 +1,7 @@
 package site.moheng.mfui.widget.enums;
 
 
-import site.moheng.mfui.widget.IWidget;
+import site.moheng.mfui.widget.AbsWidget;
 
 import static org.lwjgl.util.yoga.Yoga.*;
 
@@ -21,7 +21,7 @@ public enum WidgetAlign {
 		this.number = number;
 	}
 
-	public static WidgetAlign getAlignContent(IWidget widget) {
+	public static WidgetAlign getAlignContent(AbsWidget widget) {
 		return WidgetAlign.get(YGNodeStyleGetAlignContent(widget.getYGNode()));
 	}
 
@@ -38,15 +38,15 @@ public enum WidgetAlign {
 		};
 	}
 
-	public static WidgetAlign getAlignItems(IWidget widget) {
+	public static WidgetAlign getAlignItems(AbsWidget widget) {
 		return WidgetAlign.get(YGNodeStyleGetAlignItems(widget.getYGNode()));
 	}
 
-	public static WidgetAlign getAlignSelf(IWidget widget) {
+	public static WidgetAlign getAlignSelf(AbsWidget widget) {
 		return WidgetAlign.get(YGNodeStyleGetAlignSelf(widget.getYGNode()));
 	}
 
-	public final void setAlignContent(IWidget widget) {
+	public final void setAlignContent(AbsWidget widget) {
 		YGNodeStyleSetAlignContent(widget.getYGNode(), get());
 	}
 
@@ -54,11 +54,11 @@ public enum WidgetAlign {
 		return number;
 	}
 
-	public final void setAlignItems(IWidget widget) {
+	public final void setAlignItems(AbsWidget widget) {
 		YGNodeStyleSetAlignItems(widget.getYGNode(), get());
 	}
 
-	public final void setAlignSelf(IWidget widget) {
+	public final void setAlignSelf(AbsWidget widget) {
 		YGNodeStyleSetAlignSelf(widget.getYGNode(), get());
 	}
 }

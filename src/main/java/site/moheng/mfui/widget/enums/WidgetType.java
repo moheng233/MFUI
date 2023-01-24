@@ -2,7 +2,7 @@ package site.moheng.mfui.widget.enums;
 
 
 
-import site.moheng.mfui.widget.IWidget;
+import site.moheng.mfui.widget.AbsWidget;
 
 import static org.lwjgl.util.yoga.Yoga.*;
 
@@ -28,10 +28,10 @@ public enum WidgetType {
 		return Text;
 	}
 
-	public static  WidgetType getNodeType(IWidget widget) {
+	public static  WidgetType getNodeType(AbsWidget widget) {
 		return WidgetType.get(YGNodeGetNodeType(widget.getYGNode()));
 	}
-	public final void setNodeType(IWidget widget) {
+	public final void setNodeType(AbsWidget widget) {
 		YGNodeSetNodeType(widget.getYGNode(), get());
 	}
 }

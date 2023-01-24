@@ -2,7 +2,7 @@ package site.moheng.mfui.widget.enums;
 
 
 
-import site.moheng.mfui.widget.IWidget;
+import site.moheng.mfui.widget.AbsWidget;
 
 import static org.lwjgl.util.yoga.Yoga.*;
 
@@ -16,7 +16,7 @@ public enum WidgetJustify {
 
     private final int number;
 
-    private WidgetJustify(int number) {
+    WidgetJustify(int number) {
         this.number = number;
     }
 
@@ -35,10 +35,10 @@ public enum WidgetJustify {
         };
     }
 
-    public static WidgetJustify getJustifyContent(IWidget widget) {
+    public static WidgetJustify getJustifyContent(AbsWidget widget) {
         return WidgetJustify.get(YGNodeStyleGetJustifyContent(widget.getYGNode()));
     }
-    public final void setJustifyContent(IWidget widget) {
+    public final void setJustifyContent(AbsWidget widget) {
         YGNodeStyleSetJustifyContent(widget.getYGNode(), get());
     }
 }

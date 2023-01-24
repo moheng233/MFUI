@@ -1,7 +1,7 @@
 package site.moheng.mfui.widget.enums;
 
 import org.lwjgl.util.yoga.YGValue;
-import site.moheng.mfui.widget.IWidget;
+import site.moheng.mfui.widget.AbsWidget;
 
 
 import static org.lwjgl.util.yoga.Yoga.*;
@@ -33,37 +33,37 @@ public enum WidgetEdge {
         return number;
     }
 
-    public final float getPosition(IWidget widget) {
+    public final float getPosition(AbsWidget widget) {
         VALUE.clear();
         return YGNodeStyleGetPosition(widget.getYGNode(), get(), VALUE).value();
     }
-    public final void setPosition(IWidget widget, float value) {
+    public final void setPosition(AbsWidget widget, float value) {
         YGNodeStyleSetPosition(widget.getYGNode(), get(), value);
     }
 
-    public final void setMargin(IWidget widget, float margin) {
+    public final void setMargin(AbsWidget widget, float margin) {
         YGNodeStyleSetMargin(widget.getYGNode(), get(), margin);
     }
 
-    public final float getMargin(IWidget widget) {
+    public final float getMargin(AbsWidget widget) {
         VALUE.clear();
         return YGNodeStyleGetMargin(widget.getYGNode(), get(), VALUE).value();
     }
 
-    public final void setPadding(IWidget widget, float padding) {
+    public final void setPadding(AbsWidget widget, float padding) {
         YGNodeStyleSetPadding(widget.getYGNode(), get(), padding);
     }
 
-    public final float getPadding(IWidget widget) {
+    public final float getPadding(AbsWidget widget) {
         VALUE.clear();
         return YGNodeStyleGetPadding(widget.getYGNode(), get(), VALUE).value();
     }
 
-    public final void setBorder(IWidget widget, float border) {
+    public final void setBorder(AbsWidget widget, float border) {
         YGNodeStyleSetBorder(widget.getYGNode(), get(), border);
     }
 
-    public final float getBorder(IWidget widget) {
+    public final float getBorder(AbsWidget widget) {
         return YGNodeStyleGetBorder(widget.getYGNode(), get());
     }
 }

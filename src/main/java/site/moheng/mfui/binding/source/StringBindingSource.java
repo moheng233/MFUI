@@ -8,12 +8,22 @@ import java.util.List;
 
 public class StringBindingSource implements IBindingSource<String> {
 	protected List<IEvent<String>> listeners = new ArrayList<>();
-	protected StringBuilder data = new StringBuilder();
+	public final StringBuilder data = new StringBuilder();
 	protected String boxed = null;
 
 	@Override
 	public List<IEvent<String>> getListeners() {
 		return listeners;
+	}
+
+	public void append(String data) {
+		this.data.append(data);
+		submit();
+	}
+
+	public void append(char c) {
+		data.append(c);
+		submit();
 	}
 
 	public void set(String data) {
