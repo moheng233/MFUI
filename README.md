@@ -29,9 +29,9 @@ public class WidgetTestScreen extends WidgetScreen {
 
 	@Override
 	public void widget(ScreenWidget root) {
-		root.flexDirection(WidgetFlexDirection.Row)
-				.justifyContent(WidgetJustify.Center)
-				.alignItems(WidgetAlign.Center)
+		root.flexDirection.put(WidgetFlexDirection.Row)
+				.justifyContent.put(WidgetJustify.Center)
+				.alignItems.put(WidgetAlign.Center)
 				.child(new BoxWidget()
 						.background.put(RectDrawable.LIGHT_PANEL)
 						.child(new LabelWidget()
