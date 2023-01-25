@@ -16,6 +16,12 @@ public class StringBindingSource implements IBindingSource<String> {
 		return listeners;
 	}
 
+	@Override
+	public void submit() {
+		boxed = null;
+		IBindingSource.super.submit();
+	}
+
 	public void append(String data) {
 		this.data.append(data);
 		submit();
@@ -23,6 +29,20 @@ public class StringBindingSource implements IBindingSource<String> {
 
 	public void append(char c) {
 		data.append(c);
+		submit();
+	}
+
+	public int length() {
+		return data.length();
+	}
+
+	public void delete(int start, int end) {
+		data.delete(start, end);
+		submit();
+	}
+
+	public void deleteAtChar(int index) {
+		data.deleteCharAt(index);
 		submit();
 	}
 

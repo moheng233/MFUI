@@ -20,8 +20,8 @@ public class ButtonWidget extends AbsWidget {
 	public ButtonWidget() {
 		super();
 		border(WidgetEdge.All, 4);
-		justifyContent(WidgetJustify.Center);
-		alignItems(WidgetAlign.Center);
+		justifyContent.put(WidgetJustify.Center);
+		alignItems.put(WidgetAlign.Center);
 
 		click.on((mouse) -> playDownSound());
 	}
@@ -37,7 +37,7 @@ public class ButtonWidget extends AbsWidget {
 				(isMouseOver(mouseX, mouseY) ?
 						RectDrawable.HOVERED_BUTTON :
 						RectDrawable.ACTIVE_BUTTON))
-				.draw(matrices, layoutX(), layoutY(), layoutWidth(), layoutHeight());
+				.draw(matrices, layout.x(), layout.y(), layout.width(), layout.height());
 		super.draw(matrices, mouseX, mouseY, partialTicks, delta);
 	}
 

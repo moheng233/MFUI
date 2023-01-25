@@ -52,6 +52,78 @@ public abstract class AbsWidget implements IWidgetHandler {
 			return WidgetValue.from(YGNodeStyleGetHeight(getYGNode(), VALUE));
 		}
 	};
+	public final GetterWidgetAttribute<WidgetDisplay, AbsWidget> flex = new GetterWidgetAttribute<>(this) {
+		@Override
+		public AbsWidget put(WidgetDisplay data) {
+			data.setDisplay(widget);
+			return widget;
+		}
+
+		@Override
+		public WidgetDisplay get() {
+			return WidgetDisplay.getDisplay(widget);
+		}
+	};
+	public final GetterWidgetAttribute<WidgetJustify, AbsWidget> justifyContent = new GetterWidgetAttribute<>(this) {
+		@Override
+		public AbsWidget put(WidgetJustify data) {
+			data.setJustifyContent(widget);
+			return widget;
+		}
+
+		@Override
+		public WidgetJustify get() {
+			return WidgetJustify.getJustifyContent(widget);
+		}
+	};
+	public final GetterWidgetAttribute<WidgetAlign, AbsWidget> alignContent = new GetterWidgetAttribute<>(this) {
+		@Override
+		public AbsWidget put(WidgetAlign data) {
+			data.setAlignContent(widget);
+			return widget;
+		}
+
+		@Override
+		public WidgetAlign get() {
+			return WidgetAlign.getAlignContent(widget);
+		}
+	};
+	public final GetterWidgetAttribute<WidgetAlign, AbsWidget> alignSelf = new GetterWidgetAttribute<>(this) {
+		@Override
+		public AbsWidget put(WidgetAlign data) {
+			data.setAlignSelf(widget);
+			return widget;
+		}
+
+		@Override
+		public WidgetAlign get() {
+			return WidgetAlign.getAlignSelf(widget);
+		}
+	};
+	public final GetterWidgetAttribute<WidgetAlign, AbsWidget> alignItems = new GetterWidgetAttribute<>(this) {
+		@Override
+		public AbsWidget put(WidgetAlign data) {
+			data.setAlignItems(widget);
+			return widget;
+		}
+
+		@Override
+		public WidgetAlign get() {
+			return WidgetAlign.getAlignItems(widget);
+		}
+	};
+	public final GetterWidgetAttribute<WidgetFlexDirection, AbsWidget> flexDirection = new GetterWidgetAttribute<>(this) {
+		@Override
+		public AbsWidget put(WidgetFlexDirection data) {
+			data.setFlexDirection(widget);
+			return widget;
+		}
+
+		@Override
+		public WidgetFlexDirection get() {
+			return WidgetFlexDirection.getFlexDirect(widget);
+		}
+	};
 	public AbsWidget parent;
 	protected int hashcode;
 	@Nullable
@@ -132,7 +204,7 @@ public abstract class AbsWidget implements IWidgetHandler {
 
 	public void drawChildren(MatrixStack matrices, int mouseX, int mouseY, float partialTicks, float delta) {
 		matrices.push();
-		matrices.translate(layoutX(), layoutY(), 0);
+		matrices.translate(layout.x(), layout.y(), 0);
 		var tx = transformationX(mouseX);
 		var ty = transformationY(mouseY);
 		for (AbsWidget widget : children()) {
@@ -149,11 +221,11 @@ public abstract class AbsWidget implements IWidgetHandler {
 	}
 
 	public int layoutGlobalX() {
-		return (parent() == null ? 0 : Objects.requireNonNull(parent()).layoutGlobalX()) + layoutX();
+		return (parent() == null ? 0 : Objects.requireNonNull(parent()).layoutGlobalX()) + layout.x();
 	}
 
 	public int layoutGlobalY() {
-		return (parent() == null ? 0 : Objects.requireNonNull(parent()).layoutGlobalY()) + layoutY();
+		return (parent() == null ? 0 : Objects.requireNonNull(parent()).layoutGlobalY()) + layout.y();
 	}
 
 	public AbsWidget child(AbsWidget widget) {
@@ -191,65 +263,6 @@ public abstract class AbsWidget implements IWidgetHandler {
 		return edge.getBorder(this);
 	}
 
-	public float width() {
-		VALUE.clear();
-		return YGNodeStyleGetWidth(getYGNode(), VALUE).value();
-	}
-
-	public WidgetDisplay flex() {
-		return WidgetDisplay.getDisplay(this);
-	}
-
-	public AbsWidget flex(WidgetDisplay type) {
-		type.setDisplay(this);
-		return this;
-	}
-
-	public WidgetJustify justifyContent() {
-		return WidgetJustify.getJustifyContent(this);
-	}
-
-	public AbsWidget justifyContent(WidgetJustify justify) {
-		justify.setJustifyContent(this);
-		return this;
-	}
-
-	public WidgetAlign alignContent() {
-		return WidgetAlign.getAlignContent(this);
-	}
-
-	public AbsWidget alignContent(WidgetAlign align) {
-		align.setAlignContent(this);
-		return this;
-	}
-
-	public WidgetAlign alignSelf() {
-		return WidgetAlign.getAlignSelf(this);
-	}
-
-	public AbsWidget alignSelf(WidgetAlign align) {
-		align.setAlignSelf(this);
-		return this;
-	}
-
-	public WidgetAlign alignItems() {
-		return WidgetAlign.getAlignItems(this);
-	}
-
-	public AbsWidget alignItems(WidgetAlign align) {
-		align.setAlignItems(this);
-		return this;
-	}
-
-	public WidgetFlexDirection flexDirection() {
-		return WidgetFlexDirection.getFlexDirect(this);
-	}
-
-	public AbsWidget flexDirection(WidgetFlexDirection direction) {
-		direction.setFlexDirection(this);
-		return this;
-	}
-
 	public float position(WidgetEdge edge) {
 		return edge.getPosition(this);
 	}
@@ -275,61 +288,17 @@ public abstract class AbsWidget implements IWidgetHandler {
 		return YGNodeStyleGetFlexGrow(getYGNode());
 	}
 
-	public int layoutLeft() {
-		return layoutX();
-	}
-
-	public int layoutX() {
-		return (int) YGNodeLayoutGetLeft(getYGNode());
-	}
-
-	public int layoutTop() {
-		return layoutY();
-	}
-
-	public int layoutY() {
-		return (int) YGNodeLayoutGetTop(getYGNode());
-	}
-
-	public int layoutRight() {
-		return layoutX() + layoutWidth();
-	}
-
-	public int layoutWidth() {
-		return (int) YGNodeLayoutGetWidth(getYGNode());
-	}
-
-	public int layoutPadding(WidgetEdge edge) {
-		return (int) YGNodeLayoutGetPadding(getYGNode(), edge.get());
-	}
-
-	public int layoutMargin(WidgetEdge edge) {
-		return (int) YGNodeLayoutGetMargin(getYGNode(), edge.get());
-	}
-
-	public int layoutBorder(WidgetEdge edge) {
-		return (int) YGNodeLayoutGetBorder(getYGNode(), edge.get());
-	}
-
-	public int layoutBottom() {
-		return layoutY() + layoutHeight();
-	}
-
-	public int layoutHeight() {
-		return (int) YGNodeLayoutGetHeight(getYGNode());
-	}
-
 	public AbsWidget dirty() {
 		YGNodeMarkDirty(getYGNode());
 		return this;
 	}
 
 	public double transformationX(double x) {
-		return x - layoutX();
+		return x - layout.x();
 	}
 
 	public double transformationY(double y) {
-		return y - layoutY();
+		return y - layout.y();
 	}
 
 	@Override
@@ -410,6 +379,59 @@ public abstract class AbsWidget implements IWidgetHandler {
 
 	@Override
 	public boolean isMouseOver(double mouseX, double mouseY) {
-		return mouseX >= this.layoutX() && mouseX <= layoutX() + layoutWidth() && mouseY >= this.layoutY() && mouseY <= layoutY() + layoutHeight();
+		return mouseX >= this.layout.x() && mouseX <= layout.right() && mouseY >= this.layout.y() && mouseY <= layout.bottom();
+	}
+
+	protected final Layout layout = new Layout(this);
+	protected static final class Layout {
+		private final AbsWidget absWidget;
+
+		public Layout(AbsWidget absWidget) {
+			this.absWidget = absWidget;
+		}
+
+		public int left() {
+			return x();
+		}
+
+		public int x() {
+			return (int) YGNodeLayoutGetLeft(absWidget.getYGNode());
+		}
+
+		public int top() {
+			return y();
+		}
+
+		public int y() {
+			return (int) YGNodeLayoutGetTop(absWidget.getYGNode());
+		}
+
+		public int right() {
+			return x() + width();
+		}
+
+		public int width() {
+			return (int) YGNodeLayoutGetWidth(absWidget.getYGNode());
+		}
+
+		public int padding(WidgetEdge edge) {
+			return (int) YGNodeLayoutGetPadding(absWidget.getYGNode(), edge.get());
+		}
+
+		public int margin(WidgetEdge edge) {
+			return (int) YGNodeLayoutGetMargin(absWidget.getYGNode(), edge.get());
+		}
+
+		public int border(WidgetEdge edge) {
+			return (int) YGNodeLayoutGetBorder(absWidget.getYGNode(), edge.get());
+		}
+
+		public int bottom() {
+			return y() + height();
+		}
+
+		public int height() {
+			return (int) YGNodeLayoutGetHeight(absWidget.getYGNode());
+		}
 	}
 }

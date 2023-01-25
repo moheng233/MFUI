@@ -47,4 +47,14 @@ public record WidgetValue(float value, WidgetUnit unit) {
 			case AUTO -> Yoga.YGNodeStyleSetHeightAuto(widget.getYGNode());
 		}
 	}
+
+	@Override
+	public String toString() {
+		return switch (unit) {
+			case AUTO -> "auto";
+			case UNDEFINED -> "undefined";
+			case POINT -> String.valueOf(value);
+			case PERCENT -> value + "%";
+		};
+	}
 }

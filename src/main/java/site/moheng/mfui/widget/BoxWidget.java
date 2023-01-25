@@ -14,7 +14,7 @@ public class BoxWidget extends AbsWidget {
 
 	@Override
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float partialTicks, float delta) {
-		background.get().draw(matrices, layoutX(), layoutY(), layoutWidth(), layoutHeight());
+		background.get().draw(matrices, layout.x(), layout.y(), layout.width(), layout.height());
 		super.draw(matrices, mouseX, mouseY, partialTicks, delta);
 	}
 }

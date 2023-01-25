@@ -20,7 +20,7 @@ public class LabelWidget extends AbsWidget {
 	public void draw(MatrixStack matrices, int mouseX, int mouseY, float partialTicks, float delta) {
 		super.draw(matrices, mouseX, mouseY, partialTicks, delta);
 		updateStyle();
-		textRenderer.draw(matrices, text.get(), layoutX(), layoutY(), color.get());
+		textRenderer.draw(matrices, text.get(), layout.x(), layout.y(), color.get());
 	}
 
 	public void updateStyle() {
