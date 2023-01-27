@@ -8,7 +8,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.util.yoga.YGValue;
-import site.moheng.mfui.binding.GetterWidgetAttribute;
+import site.moheng.mfui.binding.attribute.GetterWidgetAttribute;
 import site.moheng.mfui.widget.enums.*;
 
 import java.lang.ref.Cleaner;
@@ -205,11 +205,13 @@ public abstract class AbsWidget implements IWidgetHandler {
 	public void drawChildren(MatrixStack matrices, int mouseX, int mouseY, float partialTicks, float delta) {
 		matrices.push();
 		matrices.translate(layout.x(), layout.y(), 0);
+//		ScissorStack.STACK.push(0, 0, layout.width(), layout.height(), matrices);
 		var tx = transformationX(mouseX);
 		var ty = transformationY(mouseY);
 		for (AbsWidget widget : children()) {
 			widget.draw(matrices, (int) tx, (int) ty, partialTicks, delta);
 		}
+//		ScissorStack.STACK.pop();
 		matrices.pop();
 	}
 

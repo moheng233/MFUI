@@ -32,6 +32,11 @@ public class StringBindingSource implements IBindingSource<String> {
 		submit();
 	}
 
+	public void insert(int offset, char c) {
+		data.insert(offset, c);
+		submit();
+	}
+
 	public int length() {
 		return data.length();
 	}

@@ -8,10 +8,6 @@ public record WidgetValue(float value, WidgetUnit unit) {
 	private static final WidgetValue undefined = new WidgetValue(0, WidgetUnit.UNDEFINED);
 	private static final WidgetValue auto = new WidgetValue(0, WidgetUnit.AUTO);
 
-	public static WidgetValue undefined() {
-		return undefined;
-	}
-
 	public static WidgetValue point(float value) {
 		return new WidgetValue(value, WidgetUnit.POINT);
 	}
@@ -20,16 +16,36 @@ public record WidgetValue(float value, WidgetUnit unit) {
 		return new WidgetValue(value, WidgetUnit.PERCENT);
 	}
 
-	public static WidgetValue auto() {
-		return auto;
-	}
-
 	public static WidgetValue from(YGValue value) {
 		return switch (value.unit()) {
 			case Yoga.YGUnitAuto -> auto();
 			case Yoga.YGUnitUndefined -> undefined();
 			default -> new WidgetValue(value.value(), WidgetUnit.get(value.unit()));
 		};
+	}
+
+	public static WidgetValue paser(String s) {
+		if ("undefined".equals(s)) {
+			return undefined();
+		}
+
+		if ("auto".equals(s)) {
+			return auto();
+		}
+
+		if (s.endsWith("%")) {
+			return percent(Float.parseFloat(s.substring(0, s.length() - 1)));
+		}
+
+		return point(Float.parseFloat(s));
+	}
+
+	public static WidgetValue auto() {
+		return auto;
+	}
+
+	public static WidgetValue undefined() {
+		return undefined;
 	}
 
 	public void setWidth(AbsWidget widget) {

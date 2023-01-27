@@ -26,14 +26,13 @@ public class ComputedDataBindingSource<S, T> implements IBindingSource<T> {
 
 	@Override
 	public void set(T data) {
-
+		throw new Error();
 	}
 
 	@Override
 	public T get() {
 		return computed.accept(sourceBinding.get());
 	}
-
 
 	@FunctionalInterface
 	public interface IComputed<S, T> {

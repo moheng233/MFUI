@@ -1,5 +1,7 @@
-package site.moheng.mfui.binding;
+package site.moheng.mfui.binding.attribute;
 
+import site.moheng.mfui.binding.IBindingSource;
+import site.moheng.mfui.binding.IWidgetAttribute;
 import site.moheng.mfui.widget.IWidgetHandler;
 
 import java.util.ArrayList;

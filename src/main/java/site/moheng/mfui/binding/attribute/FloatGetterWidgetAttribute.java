@@ -1,8 +1,8 @@
-package site.moheng.mfui.binding;
+package site.moheng.mfui.binding.attribute;
 
 import site.moheng.mfui.widget.AbsWidget;
 
-public abstract class FloatGetterWidgetAttribute<W extends AbsWidget> extends GetterWidgetAttribute<Float, W>{
+public abstract class FloatGetterWidgetAttribute<W extends AbsWidget> extends GetterWidgetAttribute<Float, W> {
 	protected FloatGetterWidgetAttribute(W widget) {
 		super(widget);
 	}
