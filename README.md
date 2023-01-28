@@ -11,20 +11,14 @@
 
 # 示例
 
-![example](doc/example.png)
+![example](doc/example.gif)
 
 ```java
 public class WidgetTestScreen extends WidgetScreen {
-	protected IntBindingSource count = new IntBindingSource();
+	protected StringBindingSource text = new StringBindingSource();
 
 	public WidgetTestScreen() {
 		super(Text.of("test"));
-	}
-
-	@Override
-	public void tick() {
-		super.tick();
-		count.set((count.getValue() + 20) % 765);
 	}
 
 	@Override
@@ -35,12 +29,10 @@ public class WidgetTestScreen extends WidgetScreen {
 				.child(new BoxWidget()
 						.background.put(RectDrawable.LIGHT_PANEL)
 						.child(new LabelWidget()
-								.text.binding(
-										count.computed((source) -> Text.of("Count:" + source)))
-								.color.binding(
-										count.computed((count) -> MathHelper.packRgb(count % 255, MathHelper.clamp(count - 255, 0, 255), MathHelper.clamp(count - 510, 0, 255)))
-								)
+								.text.binding(text.computed(Text::of))
 								.margin(WidgetEdge.All, 4))
+						.child(new TextBoxWidget()
+								.text.binding(text))
 						.child(new ButtonWidget()
 								.click.on((mouse) -> close())
 								.child(new LabelWidget()
@@ -50,3 +42,7 @@ public class WidgetTestScreen extends WidgetScreen {
 }
 
 ```
+
+# 数据绑定
+默认所有来自非计算绑定源的所有绑定都是双向绑定。
+> 对计算绑定源设置值会被忽略
