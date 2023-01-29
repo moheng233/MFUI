@@ -1,12 +1,12 @@
 package site.moheng.mfui.binding.source;
 
 
-import site.moheng.mfui.binding.IBindingSource;
+import site.moheng.mfui.binding.IObservable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class IntBindingSource implements IBindingSource<Integer> {
+public class IntObservable implements IObservable<Integer> {
 	protected List<IEvent<Integer>> listeners = new ArrayList<>();
 	protected int data = 0;
 	protected Integer boxed = null;
@@ -23,7 +23,7 @@ public class IntBindingSource implements IBindingSource<Integer> {
 	@Override
 	public void submit() {
 		boxed = null;
-		IBindingSource.super.submit();
+		IObservable.super.submit();
 	}
 
 	@Override

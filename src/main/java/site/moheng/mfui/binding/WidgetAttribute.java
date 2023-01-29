@@ -1,26 +1,27 @@
 package site.moheng.mfui.binding;
 
-import site.moheng.mfui.widget.IWidgetHandler;
+import site.moheng.mfui.widget.AbsWidget;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class WidgetAttribute<S, W extends IWidgetHandler> implements IWidgetAttribute<S, W> {
+public class WidgetAttribute<S, W extends AbsWidget> implements IWidgetAttribute<S, W> {
 	protected final W widget;
 	protected List<IEvent<S>> listeners = new ArrayList<>();
-	protected IBindingSource<S> binding;
+	protected IObservable<S> binding;
 	protected S defaultData;
+
 	public WidgetAttribute(S defaultData, W widget) {
 		this.defaultData = defaultData;
 		this.widget = widget;
 	}
 
-	public IBindingSource<S> getBinding() {
+	public IObservable<S> getBinding() {
 		return binding;
 	}
 
-	public W binding(IBindingSource<S> source) {
+	public W binding(IObservable<S> source) {
 		cleanBinding();
 		binding = source;
 		binding.addListener(this::change);
@@ -35,18 +36,8 @@ public class WidgetAttribute<S, W extends IWidgetHandler> implements IWidgetAttr
 		}
 	}
 
-	public void change(IBindingSource<S> source) {
+	public void change(IObservable<S> source) {
 		submit();
-	}
-
-	@Override
-	public List<IEvent<S>> getListeners() {
-		return listeners;
-	}
-
-	@Override
-	public void set(S data) {
-		put(data);
 	}
 
 	public W put(S data) {
@@ -58,6 +49,16 @@ public class WidgetAttribute<S, W extends IWidgetHandler> implements IWidgetAttr
 		}
 
 		return widget;
+	}
+
+	@Override
+	public void set(S data) {
+		put(data);
+	}
+
+	@Override
+	public List<IEvent<S>> getListeners() {
+		return listeners;
 	}
 
 	@Override

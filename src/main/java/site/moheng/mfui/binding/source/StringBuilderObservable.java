@@ -1,25 +1,25 @@
 package site.moheng.mfui.binding.source;
 
 
-import site.moheng.mfui.binding.IBindingSource;
+import site.moheng.mfui.binding.IObservable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StringBindingSource implements IBindingSource<String> {
-	protected List<IEvent<String>> listeners = new ArrayList<>();
+public class StringBuilderObservable implements IObservable<StringBuilder> {
+	protected List<IEvent<StringBuilder>> listeners = new ArrayList<>();
 	public final StringBuilder data = new StringBuilder();
 	protected String boxed = null;
 
 	@Override
-	public List<IEvent<String>> getListeners() {
+	public List<IEvent<StringBuilder>> getListeners() {
 		return listeners;
 	}
 
 	@Override
 	public void submit() {
 		boxed = null;
-		IBindingSource.super.submit();
+		IObservable.super.submit();
 	}
 
 	public void append(String data) {
@@ -51,17 +51,25 @@ public class StringBindingSource implements IBindingSource<String> {
 		submit();
 	}
 
-	public void set(String data) {
+	public void set(String str) {
 		this.data.setLength(0);
 		this.data.append(data);
 		submit();
 	}
 
-	public String get() {
-		if (boxed == null) {
-			boxed = data.toString();
-		}
+	public void set(StringBuilder data) {
 
-		return boxed;
+	}
+
+	public StringBuilder get() {
+		return data;
+	}
+
+	public String toString() {
+		return data.toString();
+	}
+
+	public IObservable<String> asString() {
+		return computed(StringBuilder::toString);
 	}
 }

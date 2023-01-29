@@ -3,7 +3,7 @@ package site.moheng.mfui.binding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseBindingSource<S> implements IBindingSource<S> {
+public class BaseObservable<S> implements IObservable<S> {
 	protected List<IEvent<S>> listeners = new ArrayList<>();
 	protected S data;
 

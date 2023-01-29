@@ -1,9 +1,9 @@
 package site.moheng.mfui.binding;
 
-import site.moheng.mfui.widget.IWidgetHandler;
+import site.moheng.mfui.widget.AbsWidget;
 
-public interface IWidgetAttribute<S, W extends IWidgetHandler> extends IBindingSource<S> {
-	W binding(IBindingSource<S> source);
+public interface IWidgetAttribute<S, W extends AbsWidget> extends IObservable<S> {
+	W binding(IObservable<S> source);
 	W put(S data);
 
 	@Override

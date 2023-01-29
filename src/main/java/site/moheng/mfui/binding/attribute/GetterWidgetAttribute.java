@@ -1,16 +1,16 @@
 package site.moheng.mfui.binding.attribute;
 
-import site.moheng.mfui.binding.IBindingSource;
+import site.moheng.mfui.binding.IObservable;
 import site.moheng.mfui.binding.IWidgetAttribute;
-import site.moheng.mfui.widget.IWidgetHandler;
+import site.moheng.mfui.widget.AbsWidget;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GetterWidgetAttribute<S, W extends IWidgetHandler> implements IWidgetAttribute<S, W> {
+public abstract class GetterWidgetAttribute<S, W extends AbsWidget> implements IWidgetAttribute<S, W> {
 	protected final W widget;
 	protected List<IEvent<S>> listeners = new ArrayList<>();
-	protected IBindingSource<S> binding;
+	protected IObservable<S> binding;
 
 	protected GetterWidgetAttribute(W widget) {
 		this.widget = widget;
@@ -21,6 +21,12 @@ public abstract class GetterWidgetAttribute<S, W extends IWidgetHandler> impleme
 		return listeners;
 	}
 
+	@Override
+	public W binding(IObservable<S> source) {
+		cleanBinding();
+		return widget;
+	}
+
 	public void cleanBinding() {
 		if (binding != null) {
 			binding.removeListener(this::change);
@@ -28,14 +34,8 @@ public abstract class GetterWidgetAttribute<S, W extends IWidgetHandler> impleme
 		}
 	}
 
-	public void change(IBindingSource<S> source) {
+	public void change(IObservable<S> source) {
 		put(source.get());
 		submit();
-	}
-
-	@Override
-	public W binding(IBindingSource<S> source) {
-		cleanBinding();
-		return widget;
 	}
 }

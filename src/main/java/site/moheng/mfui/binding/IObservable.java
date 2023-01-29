@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 动态数据的绑定源
  */
-public interface IBindingSource<S> {
+public interface IObservable<S> {
 	default void submit() {
 		for (var listener : getListeners()) {
 			listener.accept(this);
@@ -26,11 +26,11 @@ public interface IBindingSource<S> {
 		getListeners().remove(listener);
 	}
 
-	default <T> ComputedDataBindingSource<S, T> computed(ComputedDataBindingSource.IComputed<S, T> computed) {
-		return new ComputedDataBindingSource<>(this, computed);
+	default <T> ComputedObservable<S, T> computed(ComputedObservable.IComputed<S, T> computed) {
+		return new ComputedObservable<>(this, computed);
 	}
 
 	interface IEvent<S> {
-		void accept(IBindingSource<S> source);
+		void accept(IObservable<S> source);
 	}
 }

@@ -4,7 +4,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.glfw.GLFW;
-import site.moheng.mfui.binding.attribute.StringWidgetAttribute;
+import site.moheng.mfui.binding.WidgetAttribute;
 import site.moheng.mfui.util.ScissorStack;
 import site.moheng.mfui.widget.AbsWidget;
 import site.moheng.mfui.widget.enums.WidgetEdge;
@@ -14,8 +14,8 @@ public class TextBoxWidget extends AbsWidget {
 
 	public static final int BORDER = 4;
 
-	public final StringWidgetAttribute<TextBoxWidget> text = new StringWidgetAttribute<>(this);
-	protected int currer = 0;
+	public final WidgetAttribute<StringBuilder, TextBoxWidget> text = new WidgetAttribute<>(new StringBuilder(), this);
+	protected int curer = 0;
 
 	public TextBoxWidget() {
 		super();
@@ -30,11 +30,11 @@ public class TextBoxWidget extends AbsWidget {
 
 		ScissorStack.STACK.push(layout.x() + BORDER, layout.y() + BORDER, layout.width() - BORDER * 2, layout.height() - BORDER * 2, matrices);
 
-		textRenderer.drawWithShadow(matrices, text.get(), layout.x() + BORDER, layout.y() + BORDER, 0xffffff);
+		textRenderer.drawWithShadow(matrices, text.get().toString(), layout.x() + BORDER, layout.y() + BORDER, 0xffffff);
 
 		if (isFocused()) {
-			var first = textRenderer.getWidth(text.get().substring(0, currer));
-			if (currer == text.length()) {
+			var first = textRenderer.getWidth(text.get().substring(0, curer));
+			if (curer == text.get().length()) {
 				textRenderer.drawWithShadow(matrices, "_", layout.x() + first + BORDER, layout.y() + BORDER, 0xffffff);
 			} else {
 				DrawableHelper.fill(matrices, layout.x() + BORDER + first, layout.y() + BORDER, layout.x() + BORDER + 1 + first, layout.bottom() - BORDER, -1);
@@ -73,15 +73,16 @@ public class TextBoxWidget extends AbsWidget {
 		}
 
 		if (keyCode == GLFW.GLFW_KEY_BACKSPACE) {
-			if (currer > 0) {
-				text.deleteAtChar(currer - 1);
-				currer -= 1;
+			if (curer > 0) {
+				text.get().deleteCharAt(curer - 1);
+				text.submit();
+				curer -= 1;
 			}
 			return true;
 		} else if (keyCode == GLFW.GLFW_KEY_LEFT) {
-			currer = MathHelper.clamp(currer - 1, 0, text.length());
+			curer = MathHelper.clamp(curer - 1, 0, text.get().length());
 		} else if (keyCode == GLFW.GLFW_KEY_RIGHT) {
-			currer = MathHelper.clamp(currer + 1, 0, text.length());
+			curer = MathHelper.clamp(curer + 1, 0, text.get().length());
 		}
 
 		return false;
@@ -94,8 +95,9 @@ public class TextBoxWidget extends AbsWidget {
 		}
 
 		if (isFocused()) {
-			text.insert(currer, chr);
-			currer += 1;
+			text.get().insert(curer, chr);
+			text.submit();
+			curer += 1;
 			return true;
 		}
 

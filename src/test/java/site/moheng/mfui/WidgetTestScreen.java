@@ -1,7 +1,7 @@
 package site.moheng.mfui;
 
 import net.minecraft.text.Text;
-import site.moheng.mfui.binding.source.StringBindingSource;
+import site.moheng.mfui.binding.source.StringBuilderObservable;
 import site.moheng.mfui.util.RectDrawable;
 import site.moheng.mfui.widget.BoxWidget;
 import site.moheng.mfui.widget.features.LabelWidget;
@@ -16,7 +16,7 @@ import site.moheng.mfui.widget.features.TextBoxWidget;
 
 
 public class WidgetTestScreen extends WidgetScreen {
-	protected StringBindingSource text = new StringBindingSource();
+	protected StringBuilderObservable text = new StringBuilderObservable();
 
 	public WidgetTestScreen() {
 		super(Text.of("test"));
@@ -30,7 +30,7 @@ public class WidgetTestScreen extends WidgetScreen {
 				.child(new BoxWidget()
 						.background.put(RectDrawable.LIGHT_PANEL)
 						.child(new LabelWidget()
-								.text.binding(text.computed(Text::of))
+								.text.binding(text.asString().computed(Text::of))
 								.margin(WidgetEdge.All, 4))
 						.child(new TextBoxWidget()
 								.text.binding(text))

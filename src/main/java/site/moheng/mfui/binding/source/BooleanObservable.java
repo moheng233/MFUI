@@ -1,11 +1,11 @@
 package site.moheng.mfui.binding.source;
 
-import site.moheng.mfui.binding.IBindingSource;
+import site.moheng.mfui.binding.IObservable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BooleanBindingSource implements IBindingSource<Boolean> {
+public class BooleanObservable implements IObservable<Boolean> {
 	protected List<IEvent<Boolean>> listeners = new ArrayList<>();
 	protected boolean data = false;
 
