@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class WidgetEvent<E, W extends IWidgetHandler> {
-	protected final W widget;
-	protected final List<Consumer<E>> listeners = new ArrayList<>();
+public final class WidgetEvent<E, W extends IWidgetHandler> {
+	private final W widget;
+	private final List<Consumer<E>> listeners = new ArrayList<>();
 
 	public WidgetEvent(W widget) {
 		this.widget = widget;

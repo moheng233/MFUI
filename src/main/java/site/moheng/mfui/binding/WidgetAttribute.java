@@ -21,6 +21,12 @@ public class WidgetAttribute<S, W extends AbsWidget> implements IWidgetAttribute
 		return binding;
 	}
 
+	public void emitBindingChange() {
+		if(binding != null) {
+			binding.submit();
+		}
+	}
+
 	public W binding(IObservable<S> source) {
 		cleanBinding();
 		binding = source;

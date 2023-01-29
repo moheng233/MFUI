@@ -75,7 +75,7 @@ public class TextBoxWidget extends AbsWidget {
 		if (keyCode == GLFW.GLFW_KEY_BACKSPACE) {
 			if (curer > 0) {
 				text.get().deleteCharAt(curer - 1);
-				text.submit();
+				text.emitBindingChange();
 				curer -= 1;
 			}
 			return true;
@@ -96,7 +96,7 @@ public class TextBoxWidget extends AbsWidget {
 
 		if (isFocused()) {
 			text.get().insert(curer, chr);
-			text.submit();
+			text.emitBindingChange();
 			curer += 1;
 			return true;
 		}
