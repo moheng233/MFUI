@@ -15,7 +15,7 @@
 
 ```java
 public class WidgetTestScreen extends WidgetScreen {
-	protected StringBindingSource text = new StringBindingSource();
+	protected StringBuilderObservable text = new StringBuilderObservable();
 
 	public WidgetTestScreen() {
 		super(Text.of("test"));
@@ -29,7 +29,7 @@ public class WidgetTestScreen extends WidgetScreen {
 				.child(new BoxWidget()
 						.background.put(RectDrawable.LIGHT_PANEL)
 						.child(new LabelWidget()
-								.text.binding(text.computed(Text::of))
+								.text.binding(text.asString().computed(Text::of))
 								.margin(WidgetEdge.All, 4))
 						.child(new TextBoxWidget()
 								.text.binding(text))
