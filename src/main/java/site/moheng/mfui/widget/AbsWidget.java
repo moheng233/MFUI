@@ -24,11 +24,12 @@ public abstract class AbsWidget implements IWidgetHandler {
 	protected final MinecraftClient client;
 	protected final ItemRenderer itemRenderer;
 	protected final TextRenderer textRenderer;
+	protected final Layout layout = new Layout(this);
 	private final long ygNode = YGNodeNew();
 	public final GetterWidgetAttribute<WidgetValue, AbsWidget> width = new GetterWidgetAttribute<>(this) {
 
 		@Override
-		public AbsWidget put(WidgetValue data) {
+		public AbsWidget set(WidgetValue data) {
 			data.setWidth(widget);
 			return widget;
 		}
@@ -41,7 +42,7 @@ public abstract class AbsWidget implements IWidgetHandler {
 	};
 	public final GetterWidgetAttribute<WidgetValue, AbsWidget> height = new GetterWidgetAttribute<>(this) {
 		@Override
-		public AbsWidget put(WidgetValue data) {
+		public AbsWidget set(WidgetValue data) {
 			data.setHeight(widget);
 			return widget;
 		}
@@ -54,7 +55,7 @@ public abstract class AbsWidget implements IWidgetHandler {
 	};
 	public final GetterWidgetAttribute<WidgetDisplay, AbsWidget> flex = new GetterWidgetAttribute<>(this) {
 		@Override
-		public AbsWidget put(WidgetDisplay data) {
+		public AbsWidget set(WidgetDisplay data) {
 			data.setDisplay(widget);
 			return widget;
 		}
@@ -66,7 +67,7 @@ public abstract class AbsWidget implements IWidgetHandler {
 	};
 	public final GetterWidgetAttribute<WidgetJustify, AbsWidget> justifyContent = new GetterWidgetAttribute<>(this) {
 		@Override
-		public AbsWidget put(WidgetJustify data) {
+		public AbsWidget set(WidgetJustify data) {
 			data.setJustifyContent(widget);
 			return widget;
 		}
@@ -78,7 +79,7 @@ public abstract class AbsWidget implements IWidgetHandler {
 	};
 	public final GetterWidgetAttribute<WidgetAlign, AbsWidget> alignContent = new GetterWidgetAttribute<>(this) {
 		@Override
-		public AbsWidget put(WidgetAlign data) {
+		public AbsWidget set(WidgetAlign data) {
 			data.setAlignContent(widget);
 			return widget;
 		}
@@ -90,7 +91,7 @@ public abstract class AbsWidget implements IWidgetHandler {
 	};
 	public final GetterWidgetAttribute<WidgetAlign, AbsWidget> alignSelf = new GetterWidgetAttribute<>(this) {
 		@Override
-		public AbsWidget put(WidgetAlign data) {
+		public AbsWidget set(WidgetAlign data) {
 			data.setAlignSelf(widget);
 			return widget;
 		}
@@ -102,7 +103,7 @@ public abstract class AbsWidget implements IWidgetHandler {
 	};
 	public final GetterWidgetAttribute<WidgetAlign, AbsWidget> alignItems = new GetterWidgetAttribute<>(this) {
 		@Override
-		public AbsWidget put(WidgetAlign data) {
+		public AbsWidget set(WidgetAlign data) {
 			data.setAlignItems(widget);
 			return widget;
 		}
@@ -114,7 +115,7 @@ public abstract class AbsWidget implements IWidgetHandler {
 	};
 	public final GetterWidgetAttribute<WidgetFlexDirection, AbsWidget> flexDirection = new GetterWidgetAttribute<>(this) {
 		@Override
-		public AbsWidget put(WidgetFlexDirection data) {
+		public AbsWidget set(WidgetFlexDirection data) {
 			data.setFlexDirection(widget);
 			return widget;
 		}
@@ -384,7 +385,6 @@ public abstract class AbsWidget implements IWidgetHandler {
 		return mouseX >= this.layout.x() && mouseX <= layout.right() && mouseY >= this.layout.y() && mouseY <= layout.bottom();
 	}
 
-	protected final Layout layout = new Layout(this);
 	protected static final class Layout {
 		private final AbsWidget absWidget;
 

@@ -24,20 +24,20 @@ public class WidgetTestScreen extends WidgetScreen {
 
 	@Override
 	public void widget(ScreenWidget root) {
-		root.flexDirection.put(WidgetFlexDirection.Row)
-				.justifyContent.put(WidgetJustify.Center)
-				.alignItems.put(WidgetAlign.Center)
+		root.flexDirection.set(WidgetFlexDirection.Row)
+				.justifyContent.set(WidgetJustify.Center)
+				.alignItems.set(WidgetAlign.Center)
 				.child(new BoxWidget()
-						.background.put(RectDrawable.LIGHT_PANEL)
+						.background.set(RectDrawable.LIGHT_PANEL)
 						.child(new LabelWidget()
-								.text.binding(text.asString().computed(Text::of))
+								.text.binding(text.computed((StringBuilderObservable text) -> Text.of(text.getString())))
 								.margin(WidgetEdge.All, 4))
 						.child(new TextBoxWidget()
 								.text.binding(text))
 						.child(new ButtonWidget()
 								.click.on((mouse) -> close())
 								.child(new LabelWidget()
-										.text.put(Text.of("取消"))))
+										.text.set(Text.of("取消"))))
 				);
 	}
 }

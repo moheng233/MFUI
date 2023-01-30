@@ -2,18 +2,20 @@ package site.moheng.mfui.widget.features;
 
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import site.moheng.mfui.binding.WidgetAttribute;
+import site.moheng.mfui.binding.attribute.IntWidgetAttribute;
+import site.moheng.mfui.binding.attribute.SimpleValuedWidgetAttribute;
 import site.moheng.mfui.widget.AbsWidget;
 import site.moheng.mfui.widget.enums.WidgetType;
 import site.moheng.mfui.widget.enums.WidgetValue;
 
 
 public class LabelWidget extends AbsWidget {
-	public final WidgetAttribute<Text, LabelWidget> text = new WidgetAttribute<>(Text.empty(), this);
-	public final WidgetAttribute<Integer, LabelWidget> color = new WidgetAttribute<>(0xffffff, this);
+	public final SimpleValuedWidgetAttribute<Text, LabelWidget> text = new SimpleValuedWidgetAttribute<>(Text.empty(), this);
+	public final IntWidgetAttribute<LabelWidget> color = new IntWidgetAttribute<>(this);
 
 	public LabelWidget() {
 		WidgetType.Text.setNodeType(this);
+		color.set(0xffffff);
 	}
 
 	@Override
@@ -24,7 +26,7 @@ public class LabelWidget extends AbsWidget {
 	}
 
 	public void updateStyle() {
-		width.put(WidgetValue.point(textRenderer.getWidth(text.get())));
-		height.put(WidgetValue.point(textRenderer.fontHeight));
+		width.set(WidgetValue.point(textRenderer.getWidth(text.get())));
+		height.set(WidgetValue.point(textRenderer.fontHeight));
 	}
 }

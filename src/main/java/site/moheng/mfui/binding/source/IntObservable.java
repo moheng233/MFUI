@@ -1,15 +1,11 @@
 package site.moheng.mfui.binding.source;
 
 
-import site.moheng.mfui.binding.IObservable;
+import site.moheng.mfui.binding.AbsValuedObservable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class IntObservable implements IObservable<Integer> {
-	protected List<IObserver<Integer>> listeners = new ArrayList<>();
-	protected int data = 0;
-	protected Integer boxed = null;
+public final class IntObservable extends AbsValuedObservable<Integer> {
+	private int data = 0;
+	private Integer boxed = null;
 
 	public int getValue() {
 		return data;
@@ -23,17 +19,7 @@ public class IntObservable implements IObservable<Integer> {
 	@Override
 	public void setChange() {
 		boxed = null;
-		IObservable.super.setChange();
-	}
-
-	@Override
-	public List<IObserver<Integer>> getListeners() {
-		return listeners;
-	}
-
-	public void set(Integer data) {
-		this.data = data;
-		setChange();
+		super.setChange();
 	}
 
 	public Integer get() {
@@ -42,5 +28,10 @@ public class IntObservable implements IObservable<Integer> {
 		}
 
 		return boxed;
+	}
+
+	public void set(Integer data) {
+		this.data = data;
+		setChange();
 	}
 }

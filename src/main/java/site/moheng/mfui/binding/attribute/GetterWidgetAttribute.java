@@ -1,41 +1,22 @@
 package site.moheng.mfui.binding.attribute;
 
-import site.moheng.mfui.binding.IObservable;
-import site.moheng.mfui.binding.IWidgetAttribute;
+import site.moheng.mfui.binding.AbsValuedObservable;
+import site.moheng.mfui.binding.AbsWidgetAttribute;
 import site.moheng.mfui.widget.AbsWidget;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class GetterWidgetAttribute<S, W extends AbsWidget> implements IWidgetAttribute<S, W> {
-	protected final W widget;
-	protected List<IObserver<S>> listeners = new ArrayList<>();
-	protected IObservable<S> binding;
-
+public abstract class GetterWidgetAttribute<V, W extends AbsWidget> extends AbsWidgetAttribute<AbsValuedObservable<V>, W> {
 	protected GetterWidgetAttribute(W widget) {
-		this.widget = widget;
+		super(widget);
 	}
 
 	@Override
-	public List<IObserver<S>> getListeners() {
-		return listeners;
+	public void change() {
+		set(binding.get());
+		super.change();
 	}
 
-	@Override
-	public W binding(IObservable<S> source) {
-		cleanBinding();
-		return widget;
-	}
+	public abstract W set(V value);
 
-	public void cleanBinding() {
-		if (binding != null) {
-			binding.removeListener(this::change);
-			binding = null;
-		}
-	}
+	public abstract V get();
 
-	public void change(IObservable<S> source) {
-		put(source.get());
-		setChange();
-	}
 }

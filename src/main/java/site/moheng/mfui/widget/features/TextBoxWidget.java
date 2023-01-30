@@ -4,7 +4,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.glfw.GLFW;
-import site.moheng.mfui.binding.WidgetAttribute;
+import site.moheng.mfui.binding.attribute.StringBuilderWidgetAttribute;
 import site.moheng.mfui.util.ScissorStack;
 import site.moheng.mfui.widget.AbsWidget;
 import site.moheng.mfui.widget.enums.WidgetEdge;
@@ -14,13 +14,13 @@ public class TextBoxWidget extends AbsWidget {
 
 	public static final int BORDER = 4;
 
-	public final WidgetAttribute<StringBuilder, TextBoxWidget> text = new WidgetAttribute<>(new StringBuilder(), this);
+	public final StringBuilderWidgetAttribute<TextBoxWidget> text = new StringBuilderWidgetAttribute<>(this);
 	protected int curer = 0;
 
 	public TextBoxWidget() {
 		super();
 		border(WidgetEdge.All, BORDER);
-		height.put(WidgetValue.point(textRenderer.fontHeight + BORDER * 2));
+		height.set(WidgetValue.point(textRenderer.fontHeight + BORDER * 2));
 	}
 
 	@Override
@@ -30,11 +30,11 @@ public class TextBoxWidget extends AbsWidget {
 
 		ScissorStack.STACK.push(layout.x() + BORDER, layout.y() + BORDER, layout.width() - BORDER * 2, layout.height() - BORDER * 2, matrices);
 
-		textRenderer.drawWithShadow(matrices, text.get().toString(), layout.x() + BORDER, layout.y() + BORDER, 0xffffff);
+		textRenderer.drawWithShadow(matrices, text.getString(), layout.x() + BORDER, layout.y() + BORDER, 0xffffff);
 
 		if (isFocused()) {
-			var first = textRenderer.getWidth(text.get().substring(0, curer));
-			if (curer == text.get().length()) {
+			var first = textRenderer.getWidth(text.getString().substring(0, curer));
+			if (curer == text.getString().length()) {
 				textRenderer.drawWithShadow(matrices, "_", layout.x() + first + BORDER, layout.y() + BORDER, 0xffffff);
 			} else {
 				DrawableHelper.fill(matrices, layout.x() + BORDER + first, layout.y() + BORDER, layout.x() + BORDER + 1 + first, layout.bottom() - BORDER, -1);
@@ -74,15 +74,15 @@ public class TextBoxWidget extends AbsWidget {
 
 		if (keyCode == GLFW.GLFW_KEY_BACKSPACE) {
 			if (curer > 0) {
-				text.get().deleteCharAt(curer - 1);
-				text.setChange();
+				text.getBinding().data.deleteCharAt(curer - 1);
+				text.getBinding().setChange();
 				curer -= 1;
 			}
 			return true;
 		} else if (keyCode == GLFW.GLFW_KEY_LEFT) {
-			curer = MathHelper.clamp(curer - 1, 0, text.get().length());
+			curer = MathHelper.clamp(curer - 1, 0, text.getString().length());
 		} else if (keyCode == GLFW.GLFW_KEY_RIGHT) {
-			curer = MathHelper.clamp(curer + 1, 0, text.get().length());
+			curer = MathHelper.clamp(curer + 1, 0, text.getString().length());
 		}
 
 		return false;
@@ -95,8 +95,8 @@ public class TextBoxWidget extends AbsWidget {
 		}
 
 		if (isFocused()) {
-			text.get().insert(curer, chr);
-			text.setChange();
+			text.getBinding().data.insert(curer, chr);
+			text.getBinding().setChange();
 			curer += 1;
 			return true;
 		}

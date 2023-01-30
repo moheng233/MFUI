@@ -7,12 +7,8 @@ import site.moheng.mfui.widget.AbsWidget;
  * @param <S> 属性类型
  * @param <W> 用于链式调用的小部件类型
  */
-public interface IWidgetAttribute<S, W extends AbsWidget> extends IObservable<S> {
-	W binding(IObservable<S> source);
-	W put(S data);
+public interface IWidgetAttribute<S extends IObservable, W extends AbsWidget> extends IObservable {
+	W binding(S source);
 
-	@Override
-	default void set(S data) {
-		put(data);
-	}
+	S getBinding();
 }

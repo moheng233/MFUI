@@ -10,8 +10,8 @@ public class ScreenWidget extends AbsWidget {
 	protected boolean debug = false;
 
 	public ScreenWidget() {
-		width.put(WidgetValue.percent(100));
-		height.put(WidgetValue.percent(100));
+		width.set(WidgetValue.percent(100));
+		height.set(WidgetValue.percent(100));
 	}
 
 	@Override

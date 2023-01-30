@@ -1,12 +1,12 @@
 package site.moheng.mfui.widget;
 
 import net.minecraft.client.util.math.MatrixStack;
-import site.moheng.mfui.binding.WidgetAttribute;
+import site.moheng.mfui.binding.attribute.SimpleValuedWidgetAttribute;
 import site.moheng.mfui.util.RectDrawable;
 import site.moheng.mfui.widget.enums.WidgetEdge;
 
 public class BoxWidget extends AbsWidget {
-	public final WidgetAttribute<RectDrawable, BoxWidget> background = new WidgetAttribute<>(RectDrawable.EMPTY, this);
+	public final SimpleValuedWidgetAttribute<RectDrawable, BoxWidget> background = new SimpleValuedWidgetAttribute<>(RectDrawable.EMPTY, this);
 
 	public BoxWidget() {
 		border(WidgetEdge.All, 4);

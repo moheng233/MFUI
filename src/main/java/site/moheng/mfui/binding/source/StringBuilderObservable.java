@@ -1,43 +1,33 @@
 package site.moheng.mfui.binding.source;
 
 
-import site.moheng.mfui.binding.IObservable;
+import site.moheng.mfui.binding.AbsObservable;
+import site.moheng.mfui.binding.ComputedObservable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class StringBuilderObservable implements IObservable<StringBuilder> {
-	protected List<IObserver<StringBuilder>> listeners = new ArrayList<>();
+public final class StringBuilderObservable extends AbsObservable {
 	public final StringBuilder data = new StringBuilder();
-	protected String boxed = null;
+	public final ComputedObservable<StringBuilderObservable, String> asString;
 
-	@Override
-	public List<IObserver<StringBuilder>> getListeners() {
-		return listeners;
+	private String boxed = null;
+
+	public StringBuilderObservable() {
+		this.asString = computed(StringBuilderObservable::getString);
 	}
 
 	@Override
 	public void setChange() {
 		boxed = null;
-		IObservable.super.setChange();
-	}
-
-	public void set(StringBuilder data) {
-
+		super.setChange();
 	}
 
 	public StringBuilder get() {
 		return data;
 	}
 
-	public String toString() {
-		if(boxed == null) {
+	public String getString() {
+		if (boxed == null) {
 			boxed = data.toString();
 		}
 		return boxed;
-	}
-
-	public IObservable<String> asString() {
-		return computed((b) -> toString());
 	}
 }

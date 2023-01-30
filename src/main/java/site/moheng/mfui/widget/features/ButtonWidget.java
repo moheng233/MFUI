@@ -5,7 +5,7 @@ import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.sound.SoundEvents;
 import org.joml.Vector2i;
-import site.moheng.mfui.binding.WidgetAttribute;
+import site.moheng.mfui.binding.attribute.BooleanWidgetAttribute;
 import site.moheng.mfui.event.WidgetEvent;
 import site.moheng.mfui.util.RectDrawable;
 import site.moheng.mfui.widget.AbsWidget;
@@ -14,14 +14,14 @@ import site.moheng.mfui.widget.enums.WidgetEdge;
 import site.moheng.mfui.widget.enums.WidgetJustify;
 
 public class ButtonWidget extends AbsWidget {
-	public final WidgetAttribute<Boolean, ButtonWidget> disabled = new WidgetAttribute<>(false, this);
+	public final BooleanWidgetAttribute<ButtonWidget> disabled = new BooleanWidgetAttribute<>(this);
 	public final WidgetEvent<Vector2i, ButtonWidget> click = new WidgetEvent<>(this);
 
 	public ButtonWidget() {
 		super();
 		border(WidgetEdge.All, 4);
-		justifyContent.put(WidgetJustify.Center);
-		alignItems.put(WidgetAlign.Center);
+		justifyContent.set(WidgetJustify.Center);
+		alignItems.set(WidgetAlign.Center);
 
 		click.on((mouse) -> playDownSound());
 	}
