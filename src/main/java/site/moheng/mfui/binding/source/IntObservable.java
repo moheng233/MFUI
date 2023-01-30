@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IntObservable implements IObservable<Integer> {
-	protected List<IEvent<Integer>> listeners = new ArrayList<>();
+	protected List<IObserver<Integer>> listeners = new ArrayList<>();
 	protected int data = 0;
 	protected Integer boxed = null;
 
@@ -17,23 +17,23 @@ public class IntObservable implements IObservable<Integer> {
 
 	public void set(int data) {
 		this.data = data;
-		submit();
+		setChange();
 	}
 
 	@Override
-	public void submit() {
+	public void setChange() {
 		boxed = null;
-		IObservable.super.submit();
+		IObservable.super.setChange();
 	}
 
 	@Override
-	public List<IEvent<Integer>> getListeners() {
+	public List<IObserver<Integer>> getListeners() {
 		return listeners;
 	}
 
 	public void set(Integer data) {
 		this.data = data;
-		submit();
+		setChange();
 	}
 
 	public Integer get() {

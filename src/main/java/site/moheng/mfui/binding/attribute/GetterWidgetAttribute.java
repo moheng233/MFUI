@@ -9,7 +9,7 @@ import java.util.List;
 
 public abstract class GetterWidgetAttribute<S, W extends AbsWidget> implements IWidgetAttribute<S, W> {
 	protected final W widget;
-	protected List<IEvent<S>> listeners = new ArrayList<>();
+	protected List<IObserver<S>> listeners = new ArrayList<>();
 	protected IObservable<S> binding;
 
 	protected GetterWidgetAttribute(W widget) {
@@ -17,7 +17,7 @@ public abstract class GetterWidgetAttribute<S, W extends AbsWidget> implements I
 	}
 
 	@Override
-	public List<IEvent<S>> getListeners() {
+	public List<IObserver<S>> getListeners() {
 		return listeners;
 	}
 
@@ -36,6 +36,6 @@ public abstract class GetterWidgetAttribute<S, W extends AbsWidget> implements I
 
 	public void change(IObservable<S> source) {
 		put(source.get());
-		submit();
+		setChange();
 	}
 }

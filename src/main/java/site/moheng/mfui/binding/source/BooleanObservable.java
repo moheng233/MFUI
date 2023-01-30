@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BooleanObservable implements IObservable<Boolean> {
-	protected List<IEvent<Boolean>> listeners = new ArrayList<>();
+	protected List<IObserver<Boolean>> listeners = new ArrayList<>();
 	protected boolean data = false;
 
 	public boolean getValue() {
@@ -15,17 +15,17 @@ public class BooleanObservable implements IObservable<Boolean> {
 
 	public void set(boolean data) {
 		this.data = data;
-		submit();
+		setChange();
 	}
 
 	@Override
-	public List<IEvent<Boolean>> getListeners() {
+	public List<IObserver<Boolean>> getListeners() {
 		return listeners;
 	}
 
 	public void set(Boolean data) {
 		this.data = data;
-		submit();
+		setChange();
 	}
 
 	public Boolean get() {
