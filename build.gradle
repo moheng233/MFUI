@@ -26,11 +26,14 @@ allprojects {
 		modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 		implementation 'org.lwjgl:lwjgl-yoga:3.3.1'
+		include 'org.lwjgl:lwjgl-yoga:3.3.1'
 		runtimeOnly 'org.lwjgl:lwjgl-yoga::natives-windows'
+		include 'org.lwjgl:lwjgl-yoga::natives-windows'
 	}
 
 	processResources {
 		inputs.property "version", project.version
+
 
 		filesMatching("fabric.mod.json") {
 			expand "version": project.version

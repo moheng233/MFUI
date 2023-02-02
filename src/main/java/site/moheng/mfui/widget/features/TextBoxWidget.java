@@ -5,7 +5,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.glfw.GLFW;
 import site.moheng.mfui.binding.attribute.StringBuilderWidgetAttribute;
-import site.moheng.mfui.util.ScissorStack;
 import site.moheng.mfui.widget.AbsWidget;
 import site.moheng.mfui.widget.enums.WidgetEdge;
 import site.moheng.mfui.widget.enums.WidgetValue;
@@ -28,7 +27,7 @@ public class TextBoxWidget extends AbsWidget {
 		DrawableHelper.fill(matrices, layout.x(), layout.y(), layout.right(), layout.bottom(), isFocused() ? -1 : -6250336);
 		DrawableHelper.fill(matrices, layout.x() + 1, layout.y() + 1, layout.right() - 1, layout.bottom() - 1, -16777216);
 
-		ScissorStack.STACK.push(layout.x() + BORDER, layout.y() + BORDER, layout.width() - BORDER * 2, layout.height() - BORDER * 2, matrices);
+//		ScissorStack.STACK.push(layout.x() + BORDER, layout.y() + BORDER, layout.width() - BORDER * 2, layout.height() - BORDER * 2, matrices);
 
 		textRenderer.drawWithShadow(matrices, text.getString(), layout.x() + BORDER, layout.y() + BORDER, 0xffffff);
 
@@ -41,7 +40,7 @@ public class TextBoxWidget extends AbsWidget {
 			}
 		}
 
-		ScissorStack.STACK.pop();
+//		ScissorStack.STACK.pop();
 
 		super.draw(matrices, mouseX, mouseY, partialTicks, delta);
 	}
