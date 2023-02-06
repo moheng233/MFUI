@@ -20,6 +20,7 @@ public class WidgetTestScreen extends WidgetScreen {
 
 	public WidgetTestScreen() {
 		super(Text.of("test"));
+		show.set(true);
 	}
 
 	@Override
@@ -41,7 +42,8 @@ public class WidgetTestScreen extends WidgetScreen {
 						.child(new ButtonWidget()
 								.click.on((mouse) -> show.set(!show.getValue()))
 								.child(new LabelWidget()
-										.text.set(Text.of("切换显示"))))
+										.text.binding(
+												show.computed((BooleanObservable show) -> show.get() ? Text.of("点击隐藏") : Text.of("点击显示")))))
 				);
 	}
 }

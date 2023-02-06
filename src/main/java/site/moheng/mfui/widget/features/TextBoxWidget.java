@@ -16,6 +16,8 @@ public class TextBoxWidget extends AbsWidget {
 	public final StringBuilderWidgetAttribute<TextBoxWidget> text = new StringBuilderWidgetAttribute<>(this);
 	protected int curer = 0;
 
+	protected int firstChar = 0;
+
 	public TextBoxWidget() {
 		super();
 		border(WidgetEdge.All, BORDER);
@@ -28,11 +30,12 @@ public class TextBoxWidget extends AbsWidget {
 		DrawableHelper.fill(matrices, layout.x() + 1, layout.y() + 1, layout.right() - 1, layout.bottom() - 1, -16777216);
 
 //		ScissorStack.STACK.push(layout.x() + BORDER, layout.y() + BORDER, layout.width() - BORDER * 2, layout.height() - BORDER * 2, matrices);
+		var rt = textRenderer.trimToWidth(text.getString().substring(firstChar), layout.width() - BORDER * 2);
 
-		textRenderer.drawWithShadow(matrices, text.getString(), layout.x() + BORDER, layout.y() + BORDER, 0xffffff);
+		textRenderer.drawWithShadow(matrices, rt, layout.x() + BORDER, layout.y() + BORDER, 0xffffff);
 
 		if (isFocused()) {
-			var first = textRenderer.getWidth(text.getString().substring(0, curer));
+			var first = textRenderer.getWidth(rt.substring(0, Math.min(curer - firstChar, rt.length())));
 			if (curer == text.getString().length()) {
 				textRenderer.drawWithShadow(matrices, "_", layout.x() + first + BORDER, layout.y() + BORDER, 0xffffff);
 			} else {
@@ -54,8 +57,6 @@ public class TextBoxWidget extends AbsWidget {
 		if (isMouseOver(mouseX, mouseY)) {
 			root().setFocus(this);
 			return true;
-		} else {
-			root().setFocus(null);
 		}
 
 		return false;
@@ -76,12 +77,21 @@ public class TextBoxWidget extends AbsWidget {
 				text.getBinding().data.deleteCharAt(curer - 1);
 				text.getBinding().setChange();
 				curer -= 1;
+				if(curer <= firstChar) {
+					firstChar = MathHelper.clamp(firstChar - 1, 0, text.getString().length());
+				}
 			}
 			return true;
 		} else if (keyCode == GLFW.GLFW_KEY_LEFT) {
 			curer = MathHelper.clamp(curer - 1, 0, text.getString().length());
+			if(curer <= firstChar) {
+				firstChar = MathHelper.clamp(firstChar - 1, 0, text.getString().length());
+			}
 		} else if (keyCode == GLFW.GLFW_KEY_RIGHT) {
 			curer = MathHelper.clamp(curer + 1, 0, text.getString().length());
+			if(textRenderer.getWidth(text.getString().substring(firstChar)) > layout.width()) {
+				firstChar = MathHelper.clamp(firstChar + 1, 0, text.getString().length());
+			}
 		}
 
 		return false;
@@ -97,6 +107,9 @@ public class TextBoxWidget extends AbsWidget {
 			text.getBinding().data.insert(curer, chr);
 			text.getBinding().setChange();
 			curer += 1;
+			if(textRenderer.getWidth(text.getString().substring(firstChar)) > layout.width() - BORDER * 2) {
+				firstChar += 1;
+			}
 			return true;
 		}
 
