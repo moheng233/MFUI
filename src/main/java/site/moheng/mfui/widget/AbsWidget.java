@@ -183,6 +183,16 @@ public abstract class AbsWidget implements IWidgetHandler {
 		return this;
 	}
 
+	public AbsWidget removeChildAll() {
+		YGNodeRemoveAllChildren(getYGNode());
+		for (var widget : children) {
+			widget.parent(null);
+		}
+		children.clear();
+
+		return this;
+	}
+
 	public Set<AbsWidget> children() {
 		return children;
 	}

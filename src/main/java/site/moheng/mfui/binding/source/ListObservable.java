@@ -2,10 +2,11 @@ package site.moheng.mfui.binding.source;
 
 import org.jetbrains.annotations.NotNull;
 import site.moheng.mfui.binding.AbsObservable;
+import site.moheng.mfui.binding.IObservable;
 
 import java.util.*;
 
-public class ListObservable<V extends AbsObservable> extends AbsObservable implements List<V> {
+public class ListObservable<V extends IObservable> extends AbsObservable implements List<V> {
 	protected ArrayList<V> list = new ArrayList<>();
 
 	@Override
